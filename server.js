@@ -44,14 +44,22 @@ app.post('/api/publish', function(req, res){
 app.get('/api/article/latest', function(req,res){
 	var query = "SELECT * FROM captains_log";
 	dbClient.query(query, (error, queryRes) => {
-		res.json(queryRes.rows.pop());
+		if(queryRes.rows.size > 0){
+			res.json(queryRes.rows.pop());
+		} else {
+			res.json({title: 'nada surf'})
+		}
 	})
 });
 
 app.get('/api/article/all', function(req,res){
 	var query = "SELECT * FROM captains_log";
 	dbClient.query(query, (error, queryRes) => {
-		res.json(queryRes.rows);
+		if(queryRes.rows.size > 0){
+			res.json(queryRes.rows);
+		} else {
+			res.json([])
+		}
 	})
 });
 
