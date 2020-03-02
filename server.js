@@ -44,6 +44,7 @@ app.post('/api/publish', function(req, res){
 app.get('/api/article/latest', function(req,res){
 	var query = "SELECT * FROM captains_log";
 	dbClient.query(query, (error, queryRes) => {
+		console.log(queryRes)
 		if(queryRes.rows.size > 0){
 			res.json(queryRes.rows.pop());
 		} else {
@@ -55,6 +56,7 @@ app.get('/api/article/latest', function(req,res){
 app.get('/api/article/all', function(req,res){
 	var query = "SELECT * FROM captains_log";
 	dbClient.query(query, (error, queryRes) => {
+		console.log(queryRes)
 		if(queryRes.rows.size > 0){
 			res.json(queryRes.rows);
 		} else {
