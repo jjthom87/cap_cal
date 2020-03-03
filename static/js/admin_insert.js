@@ -37,7 +37,6 @@ $(document).ready(function(){
 		method: 'GET',
 		url: '/api/article/latest',
 	}).then(function(res){
-		console.log(res)
 		if(res.title != "nada surf"){
 			var title = res.title;
 			var article = res.article;
@@ -59,7 +58,7 @@ $(document).ready(function(){
 			var allArticlesDiv = $(".articles-all");
 			var headerHtml = "";
 			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: orange;">Captains Log</h1>';
+			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #ff4e33;">Captains Log</h1>';
 			headerHtml += '</div>';
 
 			allArticlesDiv.append(headerHtml);
@@ -80,7 +79,7 @@ $(document).ready(function(){
 			var allArticlesDiv = $(".articles-all");
 			var headerHtml = "";
 			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: orange;">Captains Log</h1>';
+			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #ff4e33;">Captains Log</h1>';
 			headerHtml += '</div>';
 
 			allArticlesDiv.append(headerHtml);
@@ -96,6 +95,18 @@ $(document).ready(function(){
 
 			allArticlesDiv.append(articleHtml)
 		}
+	});
+
+	$("#read-article-button-hp").on('mouseover', function(){
+		$(this).css('color', "#ff4e33")
+	})
+
+	$("#read-article-button-hp").on('mouseleave', function(){
+		$(this).css('color', "black")
+	})
+
+	$("#read-article-button-hp").on('click', function(){
+		window.location.href='/log'
 	});
 
 	// function appendGuestbook(){
