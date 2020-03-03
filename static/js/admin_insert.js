@@ -58,7 +58,7 @@ $(document).ready(function(){
 			var allArticlesDiv = $(".articles-all");
 			var headerHtml = "";
 			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #ff4e33;">Captains Log</h1>';
+			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #f4623a;">Captains Log</h1>';
 			headerHtml += '</div>';
 
 			allArticlesDiv.append(headerHtml);
@@ -79,7 +79,7 @@ $(document).ready(function(){
 			var allArticlesDiv = $(".articles-all");
 			var headerHtml = "";
 			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #ff4e33;">Captains Log</h1>';
+			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #f4623a;">Captains Log</h1>';
 			headerHtml += '</div>';
 
 			allArticlesDiv.append(headerHtml);
