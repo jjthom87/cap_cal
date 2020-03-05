@@ -61,7 +61,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Welcome to Captain Calamari's Crusade</h1>
+          <h1 class="text-uppercase text-white font-weight-bold" id="home-masthead-h1"></h1>
           <hr class="divider my-4">
         </div>
         <div class="col-lg-8 align-self-baseline">
@@ -262,8 +262,30 @@
     </div>
   </footer>
 
+  <!-- Update Modal -->
+  <div id = "update-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h2 id="update-modal-header-h2"></h2>
+        </div>
+        <div class = "modal-body">
+          <form id="update-modal-form">
+            <textarea id="update-modal-input" style="width: 385px; height: 150px"></textarea>
+            <br>
+            <input class="btn btn-secondary" value="Submit Change" id="submit-update" type="submit">
+          </form>
+        </div>
+        <div class = "modal-footer">
+          <a href = '/'><button type = "button">Home</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->

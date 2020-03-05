@@ -97,12 +97,10 @@ app.get('/api/article/all', function(req,res){
 });
 
 passport.serializeUser(function(user,done){
-	//console.log(user)
 	done(null, user);
 });
 
 passport.deserializeUser(function(obj,done){
-	//console.log(obj)
 	done(null, obj);
 });
 
@@ -165,19 +163,13 @@ app.post('/api/sign-in', function(req,res,next){
 	    if (err) {
 	      	return next(err);
 	    }
-	    //if the user does not exist or the password entered does not match the password in the database
-	    //then there is no user, and this message is sent to the client
 	    if (!user) {
 	    	return res.json({ success : false, message : 'authentication failed', info: info });
 	    }
-	    //if there is a user, then this req.login function, along with the serializing and deserializing above
-	    //will create a req.user object to be used in your routes, and also create a record
-	    //in the database under the sessions table
 	    req.login(user, function(err){
 			if(err){
 				return next(err);
 			}
-			//also sending this response to the client
 	      	return res.status(200).json({ success : true, message : 'authentication succeeded', object : user });        
 		});
   	})(req, res, next);
@@ -187,8 +179,26 @@ app.get('/api/signedin', function(req, res){
 	req.user ? res.json({status: "signed in"}) : res.json({error: "no user"})
 });
 
+app.get('/api/html/:page', function(req, res){
+	var query = "SELECT * FROM html WHERE page='" + req.params.page+ "'";
+	dbClient.query(query, (error, queryRes) => {
+		if(queryRes && queryRes.rowCount > 0){
+			res.json(queryRes.rows);
+		} else {
+			res.json([])
+		}
+	})
+});
+
+app.put('/api/html/:page', function(req, res){
+	var query = "UPDATE html SET text=$1 WHERE page='" + req.params.page + "' AND field_id='" + req.body.field_id + "'";
+	dbClient.query(query, [req.body.text], (err,results) => {
+		res.json({whatever: 'whatever'})
+	});
+});
+
 app.get("*", function(req,res){
-	res.status(404).send('uh oh! page not found')
+	res.status(404).send('Page not fucking found')
 });
 
 app.listen(PORT);

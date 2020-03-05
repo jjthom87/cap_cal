@@ -35,7 +35,6 @@ $(document).ready(function(){
 				if(res === "null_article"){
 					alert("Please Enter Article")
 				}
-				//appendGuestbook();
 			});
 
 			$('#title-input').val("");
