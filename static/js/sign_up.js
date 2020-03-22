@@ -6,7 +6,7 @@ $(document).ready(function(){
 	}).then(function(res){
 		if(!res.status){
 			alert("You must be signed in to use this page")
-			window.location.href = '/'
+			window.location.href = '/admin/si'
 		}
 	});
 

@@ -1,14 +1,16 @@
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var bodyParser = require('body-parser');
 var db = require('./static/db/dbConnection.js');
 
-//modules used for passport
+const { exec } = require('child_process');
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 var session = require('express-session');
-//adding sessions to the sessions table in the database
+
 var PostgreSqlStore = require('connect-pg-simple')(session);
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
@@ -17,6 +19,14 @@ var flash = require('connect-flash');
 var app = express();
 var dbClient = db.getConnection()
 dbClient.connect();
+
+const aws = require('aws-sdk');
+const s3 = new aws.S3();
+var multer = require('multer');
+const BUCKET = 'captain-calamari-images'
+
+var backgroundImageName = "site-background-image.jpg"
+var octoBgImagePath = path.join(__dirname, 'static/img/' + backgroundImageName)
 
 var PORT = process.env.PORT || 8000;
 
@@ -199,6 +209,52 @@ app.put('/api/html/:page', function(req, res){
 
 app.get("*", function(req,res){
 	res.status(404).send('Page not fucking found')
+});
+
+function getBackgroundImage(){
+	s3.getObject({
+		Bucket: BUCKET, 
+		Key: backgroundImageName
+	}, (err, data) => {
+		if (err) console.error(err);
+		fs.writeFileSync(octoBgImagePath, data.Body);
+	});
+}
+
+if (!fs.existsSync(octoBgImagePath)){
+	getBackgroundImage()
+}
+
+var storage = multer.diskStorage({
+    destination: function(req, file, callback){
+    	callback(null, 'static/img/');
+    },
+    filename: function(req, file, callback){
+        callback(null, 'site-background-image-tmp.jpg');
+    }
+});
+var upload = multer({storage: storage});
+
+app.post("/publish/image", upload.single('background-image'), function(req, res){
+	var params = {Bucket: BUCKET, Key: backgroundImageName, Body: ''};
+	var fileStream = fs.createReadStream(path.join(__dirname, 'static/img/site-background-image-tmp.jpg'));
+	fileStream.on('error', function(err) {
+	  console.log('File Error', err);
+	});
+	params.Body = fileStream;
+
+	s3.upload(params, function(err, data) {
+		if(err){
+			res.json({error: err})
+		} else {
+			exec('rm ' + path.join(__dirname, 'static/img/site-background-image.jpg') + '; mv ' + path.join(__dirname, 'static/img/site-background-image-tmp.jpg') + ' ' + path.join(__dirname, 'static/img/site-background-image.jpg') + ';', (err, stdout, stderr) => {
+			  if (err) {
+			    return;
+			  }
+			});
+			res.json({result: "Image Uploaded", data: data})
+		}
+	});
 });
 
 app.listen(PORT);

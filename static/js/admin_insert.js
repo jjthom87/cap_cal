@@ -7,7 +7,7 @@ $(document).ready(function(){
 		console.log(res)
 		if(!res.status){
 			alert("You must be signed in to use this page")
-			window.location.href = '/'
+			window.location.href = '/admin/si'
 		}
 	});
 
@@ -59,54 +59,6 @@ $(document).ready(function(){
 		}
 	});
 
-	$.ajax({
-		method: 'GET',
-		url: '/api/article/all'
-	}).then(function(articles){
-
-		if(articles.size > 0){
-			var allArticlesDiv = $(".articles-all");
-			var headerHtml = "";
-			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #f4623a;">Captains Log</h1>';
-			headerHtml += '</div>';
-
-			allArticlesDiv.append(headerHtml);
-
-			articles.forEach((article) => {
-				var articleHtml = "";
-				articleHtml += '<div class="col-lg-10 align-self-end">';
-				articleHtml += '<h3 class="text-uppercase text-white font-weight-bold">' + article.title + '</h1>';
-				articleHtml += '<hr class="divider my-4">';
-				articleHtml += '</div>';
-				articleHtml += '<div class="col-lg-8 align-self-baseline">';
-				articleHtml += '<p class="text-white-75 font-weight-light mb-5">' + article.article + '</p>';
-				articleHtml += '</div>';
-
-				allArticlesDiv.append(articleHtml)
-			});
-		} else {
-			var allArticlesDiv = $(".articles-all");
-			var headerHtml = "";
-			headerHtml += '<div class="col-lg-10 align-self-end" style="padding-bottom: 15px">';
-			headerHtml += '<h1 class="text-uppercase font-weight-bold" style="color: #f4623a;">Captains Log</h1>';
-			headerHtml += '</div>';
-
-			allArticlesDiv.append(headerHtml);
-
-			var articleHtml = "";
-			articleHtml += '<div class="col-lg-10 align-self-end">';
-			articleHtml += '<h3 class="text-uppercase text-white font-weight-bold">Awaiting First Article</h1>';
-			articleHtml += '<hr class="divider my-4">';
-			articleHtml += '</div>';
-			articleHtml += '<div class="col-lg-8 align-self-baseline">';
-			articleHtml += '<p class="text-white-75 font-weight-light mb-5">Awaiting First Article</p>';
-			articleHtml += '</div>';
-
-			allArticlesDiv.append(articleHtml)
-		}
-	});
-
 	$("#read-article-button-hp").on('mouseover', function(){
 		$(this).css('color', "#ff4e33")
 	})
@@ -118,7 +70,6 @@ $(document).ready(function(){
 	$("#read-article-button-hp").on('click', function(){
 		window.location.href='/log'
 	});
-
 
 
 });
